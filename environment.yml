@@ -1,0 +1,8 @@
+name: philosophy-article
+dependencies:
+- pip
+- python=2
+- ipython-notebook
+- requests
+- pip:
+    - python-twitter
