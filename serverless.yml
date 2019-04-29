@@ -12,7 +12,7 @@ provider:
   environment:
 
     CONSUMER_KEY: ${ssm:philosophy_consumer_key}
-    CONSUMER_SECRET: ${ssm:philosophy_onsumer_secret}
+    CONSUMER_SECRET: ${ssm:philosophy_consumer_secret}
     TOKEN: ${ssm:philosophy_token}
     TOKEN_SECRET: ${ssm:philosophy_token_secret}
 
@@ -27,8 +27,9 @@ provider:
 
 functions:
   hello:
-    handler: tweet.update
+    handler: tweet.tweet
 
     events:
-      - schedule: rate(1 day)
+      - schedule: rate(963 minutes)
+
 

@@ -1,38 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import re
-import requests
-import sys
 import twitter as tw
-import json
+import os
+import requests
 
 
 def get_article():
     r = requests.get("http://plato.stanford.edu/cgi-bin/encyclopedia/random")
-    try:
-
-        title = re.findall(r"<title>(.*) \(.*\)</title>", r.text.replace("\n", ""))[0]
-        url = r.url
-    except IndexError:
-        sys.exit(0)
+    title = re.findall(r"<title>(.*) \(.*\)</title>", r.text.replace("\n", ""))[0]
+    url = r.url
     return title, url
 
 
-def update_twitter(title, url):
-    with open("twitter.json", "r") as f:
-        credentials = json.load(f)
-    t = tw.Api(**credentials)
-    try:
-        status = "{} {}".format(title, url)
-        t.PostUpdate(status=status)
-        return "Tweeted {}".format(status)
-    except Exception as e:
-        return e.message[0]['message']
+def tweet(event, context):
+    cred = {
+        "consumer_key": os.environ["CONSUMER_KEY"].strip(),
+        "consumer_secret": os.environ["CONSUMER_SECRET"].strip(),
+        "token": os.environ["TOKEN"].strip(),
+        "token_secret": os.environ["TOKEN_SECRET"].strip(),
+    }
+    auth = tw.OAuth(**cred)
+    t = tw.Twitter(auth=auth)
 
-
-def update(event=None, context=None):
     title, url = get_article()
-    twitter_log = update_twitter(title, url)
-    return twitter_log
-
-
-if __name__ == '__main__':
-    print(update())
+    status = f"{title} {url}"
+    t.statuses.update(status=status)
