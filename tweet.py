@@ -35,4 +35,4 @@ def update(event=None, context=None):
 
 
 if __name__ == '__main__':
-    print update()
+    print(update())

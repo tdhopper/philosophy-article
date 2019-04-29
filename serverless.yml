@@ -1,0 +1,34 @@
+
+service: philosophy-article
+
+provider:
+  name: aws
+  runtime: python3.6
+
+# you can overwrite defaults here
+  stage: prod
+  region: us-east-1
+
+  environment:
+
+    CONSUMER_KEY: ${ssm:consumer_key}
+    CONSUMER_SECRET: ${ssm:consumer_secret}
+    TOKEN: ${ssm:token}
+    TOKEN_SECRET: ${ssm:token_secret}
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.py
+#    - exclude-me-dir/**
+
+functions:
+  hello:
+    handler: tweet.update
+
+    events:
+      - schedule: rate(1 day)
+
