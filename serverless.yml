@@ -11,10 +11,10 @@ provider:
 
   environment:
 
-    CONSUMER_KEY: ${ssm:consumer_key}
-    CONSUMER_SECRET: ${ssm:consumer_secret}
-    TOKEN: ${ssm:token}
-    TOKEN_SECRET: ${ssm:token_secret}
+    CONSUMER_KEY: ${ssm:philosophy_consumer_key}
+    CONSUMER_SECRET: ${ssm:philosophy_onsumer_secret}
+    TOKEN: ${ssm:philosophy_token}
+    TOKEN_SECRET: ${ssm:philosophy_token_secret}
 
 # you can add packaging information here
 #package:
