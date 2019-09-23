@@ -8,6 +8,7 @@ import requests
 
 def get_article():
     r = requests.get("http://plato.stanford.edu/cgi-bin/encyclopedia/random")
+    r.encoding = "utf-8"
     title = re.findall(r"<title>(.*) \(.*\)</title>", r.text.replace("\n", ""))[0]
     url = r.url
     return title, url
